@@ -8,7 +8,7 @@
 
 현재 h264 파일 스트림에 올려서 VLC로 테스트 가능하게 임시 완성본 업로드
 
-# How TO View In VLC
+# How To View In VLC
 1. Media -> Open Network Stream
 2. rtsp://127.0.0.1:8554
 3. 로컬이 아니면 127.0.0.1을 서버 ip로 대체
