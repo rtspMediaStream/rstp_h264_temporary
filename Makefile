@@ -7,7 +7,7 @@ OBJ_DIR = $(ROOT)/objs
 
 CXX = g++
 CXXFLAGS = -std=c++11 -O2 -I$(INCLUDE_DIR)
-LDFLAGS = 
+LDFLAGS = -lavcodec -lavformat -lavutil -lswscale -lpthread
 
 # 소스 파일 정의
 SRCS = $(wildcard $(SRC_DIR)/*.cpp)

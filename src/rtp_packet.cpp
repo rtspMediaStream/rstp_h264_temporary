@@ -1,4 +1,4 @@
-#include <rtp_packet.hpp>
+#include "rtp_packet.hpp"
 
 #include <cstdlib>
 #include <cstring>
@@ -14,10 +14,13 @@ RtpPacket::RtpPacket(const RtpHeader &rtpHeader) : header(rtpHeader)
 
 void RtpPacket::load_data(const uint8_t *data, const int64_t dataSize, const int64_t bias)
 {
-    memcpy(this->RTP_Payload + bias, data, std::min(dataSize, static_cast<int64_t>(sizeof(this->RTP_Payload) - bias)));
+    memcpy(this->RTP_Payload + bias, data,
+           std::min(dataSize, static_cast<int64_t>(sizeof(this->RTP_Payload) - bias)));
 }
 
-int64_t RtpPacket::rtp_sendto(int sockfd, const int64_t _bufferLen, const int flags, const sockaddr *to, const uint32_t timeStampStep)
+int64_t RtpPacket::rtp_sendto(int sockfd,                   const int64_t _bufferLen,
+                              const int flags,              const sockaddr *to,
+                              const uint32_t timeStampStep)
 {
     auto sentBytes = sendto(sockfd, this, _bufferLen, flags, to, sizeof(sockaddr));
     this->set_header_seq(this->get_header_seq() + 1);
@@ -36,7 +39,3 @@ inline void RtpPacket::set_header_timestamp(const uint32_t _newtimestamp)
     this->header.set_timestamp(_newtimestamp);
     this->cached_cur_timestamp = _newtimestamp;
 }
-
-//inline uint8_t *RtpPacket::get_payload() { return reinterpret_cast<uint8_t *>(this->RTP_Payload); }
-inline uint32_t RtpPacket::get_header_seq() { return this->cached_cur_seq; }
-inline uint32_t RtpPacket::get_header_timestamp() { return this->cached_cur_timestamp; }

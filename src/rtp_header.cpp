@@ -1,5 +1,5 @@
-
 #include "rtp_header.hpp"
+#include "common.hpp"
 
 RtpHeader::RtpHeader(const uint8_t  _version,     const uint8_t  _padding,
                      const uint8_t  _extension,   const uint8_t  _csrcCount,
@@ -24,10 +24,8 @@ RtpHeader::RtpHeader(const uint16_t _seq, const uint32_t _timestamp, const uint3
     this->padding = 0;
     this->extension = 0;
     this->csrcCount = 0;
-
     this->marker = 0;
     this->payloadType = RTP_PAYLOAD_TYPE_H264;
-
     this->seq = htons(_seq);
     this->timestamp = htonl(_timestamp);
     this->ssrc = htonl(_ssrc);

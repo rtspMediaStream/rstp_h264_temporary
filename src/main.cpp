@@ -1,17 +1,23 @@
+#include <rtsp_cam.hpp>
 #include <rtsp.hpp>
 
 #include <iostream>
 #include <cstdlib>
+#include <thread>
 
 int main(int argc, char *argv[])
 {
-    if (argc != 3)
-    {
-        fprintf(stdout, "usage: %s <file name> <fps>\n", argv[0]);
-        return 1;
-    }
-    RTSP rtspServer(argv[1]);
-    rtspServer.Start(19990825, "rpi5_picamera", 600, atof(argv[2]));
+    RTSPCam rtspServer;
+    std::thread capture_thread([&rtspServer]() {
+         rtspServer.capture_frames();
+     });
+
+     rtspServer.Start(20001102, "rpi5_picamera", 600, 30);
+    
+     capture_thread.join();
+
+    // RTSP rtspServer(argv[2]);
+    //rtspServer.Start(20001102, "h264_streaming", 600, 30);
 
     return 0;
 }
